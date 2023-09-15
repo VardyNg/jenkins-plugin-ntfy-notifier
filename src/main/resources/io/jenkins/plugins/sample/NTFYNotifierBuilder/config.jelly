@@ -6,6 +6,9 @@
     <f:entry title="${%Topic}" field="topic">
         <f:textbox />
     </f:entry>
+    <f:textarea title="${%Message}" field="message">
+        <f:textbox />
+    </f:textarea>
     <f:advanced>
         <f:entry title="${%French}" field="useFrench"
                  description="${%FrenchDescr}">
