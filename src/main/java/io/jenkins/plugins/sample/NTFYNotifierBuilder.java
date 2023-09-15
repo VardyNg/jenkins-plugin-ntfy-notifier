@@ -18,18 +18,24 @@ import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
 
-public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
+public class NTFYNotifierBuilder extends Builder implements SimpleBuildStep {
 
-    private final String name;
+    private final String serverURL;
+    private final String topic;
     private boolean useFrench;
 
     @DataBoundConstructor
-    public HelloWorldBuilder(String name) {
-        this.name = name;
+    public NTFYNotifierBuilder(String serverURL, String topic) {
+        this.serverURL = serverURL;
+        this.topic = topic;
     }
 
-    public String getName() {
-        return name;
+    public String getServerURL() {
+        return serverURL;
+    }
+
+    public String getTopic() {
+        return topic;
     }
 
     public boolean isUseFrench() {
@@ -45,9 +51,9 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
     public void perform(Run<?, ?> run, FilePath workspace, EnvVars env, Launcher launcher, TaskListener listener)
             throws InterruptedException, IOException {
         if (useFrench) {
-            listener.getLogger().println("Bonjour, " + name + "!");
+            listener.getLogger().println("Bonjour, " + serverURL + "!");
         } else {
-            listener.getLogger().println("Hello, " + name + "!");
+            listener.getLogger().println("Sending message to https://" + serverURL + "/" + topic);
         }
     }
 
@@ -58,11 +64,11 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
         public FormValidation doCheckName(@QueryParameter String value, @QueryParameter boolean useFrench)
                 throws IOException, ServletException {
             if (value.length() == 0)
-                return FormValidation.error(Messages.HelloWorldBuilder_DescriptorImpl_errors_missingName());
+                return FormValidation.error(Messages.NTFYNotifyBuilder_DescriptorImpl_errors_missingName());
             if (value.length() < 4)
-                return FormValidation.warning(Messages.HelloWorldBuilder_DescriptorImpl_warnings_tooShort());
+                return FormValidation.warning(Messages.NTFYNotifyBuilder_DescriptorImpl_warnings_tooShort());
             if (!useFrench && value.matches(".*[éáàç].*")) {
-                return FormValidation.warning(Messages.HelloWorldBuilder_DescriptorImpl_warnings_reallyFrench());
+                return FormValidation.warning(Messages.NTFYNotifyBuilder_DescriptorImpl_warnings_reallyFrench());
             }
             return FormValidation.ok();
         }
@@ -74,7 +80,7 @@ public class HelloWorldBuilder extends Builder implements SimpleBuildStep {
 
         @Override
         public String getDisplayName() {
-            return Messages.HelloWorldBuilder_DescriptorImpl_DisplayName();
+            return Messages.NTFYNotifyBuilder_DescriptorImpl_DisplayName();
         }
     }
 }
