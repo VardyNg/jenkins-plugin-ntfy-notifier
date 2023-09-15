@@ -114,6 +114,7 @@ public class NTFYNotifierBuilder extends Builder implements SimpleBuildStep {
         } catch (Exception e) {
             e.printStackTrace();
             listener.getLogger().println("Failed to send message to https://" + serverURL + "/" + topic);
+            throw e;
         }
     }
 
