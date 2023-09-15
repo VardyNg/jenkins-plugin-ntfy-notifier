@@ -25,13 +25,15 @@ public class NTFYNotifierBuilder extends Builder implements SimpleBuildStep {
 
     private final String serverURL;
     private final String topic;
+    private final String title;
     private final String message;
 
     @DataBoundConstructor
-    public NTFYNotifierBuilder(String serverURL, String topic, String message) {
+    public NTFYNotifierBuilder(String serverURL, String topic, String message, String title) {
         this.serverURL = serverURL;
         this.topic = topic;
         this.message = message;
+        this.title = title;
     }
 
     public String getServerURL() {
@@ -60,6 +62,9 @@ public class NTFYNotifierBuilder extends Builder implements SimpleBuildStep {
 
             // Set the request method (POST is the default but being explicit here).
             conn.setRequestMethod("POST");
+
+            // set headers
+            if (!title.isEmpty()) conn.setRequestProperty("Title", title);
             
             // To send a POST request, we should set this to true
             conn.setDoOutput(true);
