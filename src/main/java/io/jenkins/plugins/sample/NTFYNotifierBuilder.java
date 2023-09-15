@@ -20,6 +20,7 @@ import org.kohsuke.stapler.QueryParameter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.function.BiConsumer;
 
 public class NTFYNotifierBuilder extends Builder implements SimpleBuildStep {
 
@@ -30,8 +31,19 @@ public class NTFYNotifierBuilder extends Builder implements SimpleBuildStep {
     private final String priority;
     private final String tags;
     private final Boolean useMarkdownFormatting;
+    private final String delayedMessage;
+
     @DataBoundConstructor
-    public NTFYNotifierBuilder(String serverURL, String topic, String message, String title, String priority, String tags, Boolean useMarkdownFormatting) {
+    public NTFYNotifierBuilder(
+        String serverURL, 
+        String topic, 
+        String message, 
+        String title, 
+        String priority, 
+        String tags, 
+        Boolean useMarkdownFormatting, 
+        String delayedMessage
+    ) {
         this.serverURL = serverURL;
         this.topic = topic;
         this.message = message;
@@ -39,6 +51,7 @@ public class NTFYNotifierBuilder extends Builder implements SimpleBuildStep {
         this.priority = priority;
         this.tags = tags;
         this.useMarkdownFormatting = useMarkdownFormatting;
+        this.delayedMessage = delayedMessage;
     }
 
     public String getServerURL() {
@@ -64,6 +77,7 @@ public class NTFYNotifierBuilder extends Builder implements SimpleBuildStep {
         listener.getLogger().println("Title: " + title);
         listener.getLogger().println("Priority: " + priority);
         listener.getLogger().println("Tags " + tags);
+        listener.getLogger().println("Delayed " + delayedMessage);
 
         try {
             HttpURLConnection conn = (HttpURLConnection) new URL(topicURL).openConnection();
@@ -75,6 +89,7 @@ public class NTFYNotifierBuilder extends Builder implements SimpleBuildStep {
             if (!title.isEmpty()) conn.setRequestProperty("Title", title);
             if (!priority.isEmpty()) conn.setRequestProperty("Priority", priority);
             if (!tags.isEmpty()) conn.setRequestProperty("Tags", tags.trim());
+            if (!delayedMessage.isEmpty()) conn.setRequestProperty("X-Delay", delayedMessage);
             conn.setRequestProperty("Markdown", useMarkdownFormatting ? "yes" : "no");
             // To send a POST request, we should set this to true
             conn.setDoOutput(true);
