@@ -22,12 +22,13 @@ public class NTFYNotifierBuilder extends Builder implements SimpleBuildStep {
 
     private final String serverURL;
     private final String topic;
-    private boolean useFrench;
+    private final String message;
 
     @DataBoundConstructor
-    public NTFYNotifierBuilder(String serverURL, String topic) {
+    public NTFYNotifierBuilder(String serverURL, String topic, String message) {
         this.serverURL = serverURL;
         this.topic = topic;
+        this.message = message;
     }
 
     public String getServerURL() {
@@ -38,13 +39,8 @@ public class NTFYNotifierBuilder extends Builder implements SimpleBuildStep {
         return topic;
     }
 
-    public boolean isUseFrench() {
-        return useFrench;
-    }
-
-    @DataBoundSetter
-    public void setUseFrench(boolean useFrench) {
-        this.useFrench = useFrench;
+    public String getMessage() {
+        return message;
     }
 
     @Override
