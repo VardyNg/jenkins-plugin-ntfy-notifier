@@ -29,6 +29,9 @@
             <f:radio value="1" name="priority"/> ${%Priority_1}
         </span>
     </f:entry>
+    <f:entry title="${%Tags}" field="tags">
+        <f:textbox />
+    </f:entry>
     <f:advanced>
         <f:entry title="${%French}" field="useFrench"
                  description="${%FrenchDescr}">
