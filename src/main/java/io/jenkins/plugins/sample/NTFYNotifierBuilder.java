@@ -109,7 +109,7 @@ public class NTFYNotifierBuilder extends Builder implements SimpleBuildStep {
                 listener.getLogger().println("Request was successful!");
             } else {
                 // Handle any other responses here
-                listener.getLogger().println("Failed with HTTP response code: " + responseCode);
+                throw new Error("Failed with HTTP response code: " + responseCode);
             }
         } catch (Exception e) {
             e.printStackTrace();
