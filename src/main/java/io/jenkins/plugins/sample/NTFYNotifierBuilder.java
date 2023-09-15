@@ -24,7 +24,7 @@ import java.util.function.BiConsumer;
 
 public class NTFYNotifierBuilder extends Builder implements SimpleBuildStep {
 
-    private final String serverURL;
+    private String serverURL;
     private final String topic;
     private final String title;
     private final String message;
@@ -66,11 +66,17 @@ public class NTFYNotifierBuilder extends Builder implements SimpleBuildStep {
         return message;
     }
 
+    private String normalizeURL(String url) {
+        if (url.startsWith("http://") || url.startsWith("https://")) 
+            return url;
+        return "https://" + url;
+    }
     @Override
     public void perform(Run<?, ?> run, FilePath workspace, EnvVars env, Launcher launcher, TaskListener listener)
             throws InterruptedException, IOException {
-
-        final String topicURL = "https://" + serverURL + "/" + topic;
+        
+        serverURL = normalizeURL(serverURL);
+        final String topicURL = serverURL + "/" + topic;
         
         listener.getLogger().println("Sending message to " + topicURL);
         listener.getLogger().println("Message: " + message);
