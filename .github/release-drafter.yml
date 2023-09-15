@@ -1,2 +1,2 @@
 _extends: .github
-tag-template: ntfy-sender-$NEXT_MINOR_VERSION
+tag-template: ntfy-ntfy-$NEXT_MINOR_VERSION
