@@ -29,14 +29,16 @@ public class NTFYNotifierBuilder extends Builder implements SimpleBuildStep {
     private final String message;
     private final String priority;
     private final String tags;
+    private final Boolean useMarkdownFormatting;
     @DataBoundConstructor
-    public NTFYNotifierBuilder(String serverURL, String topic, String message, String title, String priority, String tags) {
+    public NTFYNotifierBuilder(String serverURL, String topic, String message, String title, String priority, String tags, Boolean useMarkdownFormatting) {
         this.serverURL = serverURL;
         this.topic = topic;
         this.message = message;
         this.title = title;
         this.priority = priority;
         this.tags = tags;
+        this.useMarkdownFormatting = useMarkdownFormatting;
     }
 
     public String getServerURL() {
@@ -72,8 +74,8 @@ public class NTFYNotifierBuilder extends Builder implements SimpleBuildStep {
             // set headers
             if (!title.isEmpty()) conn.setRequestProperty("Title", title);
             if (!priority.isEmpty()) conn.setRequestProperty("Priority", priority);
-            
             if (!tags.isEmpty()) conn.setRequestProperty("Tags", tags.trim());
+            conn.setRequestProperty("Markdown", useMarkdownFormatting ? "yes" : "no");
             // To send a POST request, we should set this to true
             conn.setDoOutput(true);
 

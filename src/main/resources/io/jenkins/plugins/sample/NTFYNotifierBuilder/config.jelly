@@ -33,7 +33,7 @@
         <f:textbox />
     </f:entry>
     <f:advanced>
-        <f:entry title="${%French}" field="useFrench"
+        <f:entry title="${%MarkDownFormatting}" field="useMarkdownFormatting"
                  description="${%FrenchDescr}">
             <f:checkbox />
         </f:entry>
