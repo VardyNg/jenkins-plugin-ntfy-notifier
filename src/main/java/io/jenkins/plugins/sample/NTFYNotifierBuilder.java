@@ -17,6 +17,9 @@ import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.DataBoundSetter;
 import org.kohsuke.stapler.QueryParameter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 
 public class NTFYNotifierBuilder extends Builder implements SimpleBuildStep {
 
@@ -46,10 +49,35 @@ public class NTFYNotifierBuilder extends Builder implements SimpleBuildStep {
     @Override
     public void perform(Run<?, ?> run, FilePath workspace, EnvVars env, Launcher launcher, TaskListener listener)
             throws InterruptedException, IOException {
-        if (useFrench) {
-            listener.getLogger().println("Bonjour, " + serverURL + "!");
-        } else {
-            listener.getLogger().println("Sending message to https://" + serverURL + "/" + topic);
+
+        final String topicURL = "https://" + serverURL + "/" + topic;
+        
+        listener.getLogger().println("Sending message to " + topicURL);
+        listener.getLogger().println("Message: " + message);
+
+        try {
+            HttpURLConnection conn = (HttpURLConnection) new URL(topicURL).openConnection();
+
+            // Set the request method (POST is the default but being explicit here).
+            conn.setRequestMethod("POST");
+            
+            // To send a POST request, we should set this to true
+            conn.setDoOutput(true);
+
+            // Write the body of the request
+            conn.getOutputStream().write(message.getBytes(StandardCharsets.UTF_8));
+
+            int responseCode = conn.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                // Success
+                listener.getLogger().println("Request was successful!");
+            } else {
+                // Handle any other responses here
+                listener.getLogger().println("Failed with HTTP response code: " + responseCode);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            listener.getLogger().println("Failed to send message to https://" + serverURL + "/" + topic);
         }
     }
 
