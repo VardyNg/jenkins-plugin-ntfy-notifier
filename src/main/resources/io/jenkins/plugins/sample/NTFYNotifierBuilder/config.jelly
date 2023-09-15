@@ -12,27 +12,27 @@
     <f:textarea title="${%Message}" field="message">
         <f:textbox />
     </f:textarea>
-    <f:entry name="priority" title="${%Priority}" field="priority">
-        <span style="margin-right: 15px; display: inline-block;">
-            <f:radio value="5" name="priority"/> ${%Priority_5}
-        </span>
-        <span style="margin-right: 15px; display: inline-block;">
-            <f:radio value="4" name="priority"/> ${%Priority_4}
-        </span>
-        <span style="margin-right: 15px; display: inline-block;">
-            <f:radio value="3" name="priority"/> ${%Priority_3}
-        </span>
-        <span style="margin-right: 15px; display: inline-block;">
-            <f:radio value="2" name="priority"/> ${%Priority_2}
-        </span>
-        <span style="margin-right: 15px; display: inline-block;">
-            <f:radio value="1" name="priority"/> ${%Priority_1}
-        </span>
-    </f:entry>
-    <f:entry title="${%Tags}" field="tags">
-        <f:textbox />
-    </f:entry>
     <f:advanced>
+        <f:entry name="priority" title="${%Priority}" field="priority">
+            <span style="margin-right: 15px; display: inline-block;">
+                <f:radio value="5" name="priority"/> ${%Priority_5}
+            </span>
+            <span style="margin-right: 15px; display: inline-block;">
+                <f:radio value="4" name="priority"/> ${%Priority_4}
+            </span>
+            <span style="margin-right: 15px; display: inline-block;">
+                <f:radio value="3" name="priority"/> ${%Priority_3}
+            </span>
+            <span style="margin-right: 15px; display: inline-block;">
+                <f:radio value="2" name="priority"/> ${%Priority_2}
+            </span>
+            <span style="margin-right: 15px; display: inline-block;">
+                <f:radio value="1" name="priority"/> ${%Priority_1}
+            </span>
+        </f:entry>
+        <f:entry title="${%Tags}" field="tags">
+            <f:textbox />
+        </f:entry>
         <f:entry title="${%MarkDownFormatting}" field="useMarkdownFormatting"
                  description="${%FrenchDescr}">
             <f:checkbox />
