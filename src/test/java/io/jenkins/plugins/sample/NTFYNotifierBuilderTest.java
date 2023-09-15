@@ -10,7 +10,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.jvnet.hudson.test.JenkinsRule;
 
-public class HelloWorldBuilderTest {
+public class NTFYNotifierBuilderTest {
 
     @Rule
     public JenkinsRule jenkins = new JenkinsRule();
@@ -20,21 +20,21 @@ public class HelloWorldBuilderTest {
     @Test
     public void testConfigRoundtrip() throws Exception {
         FreeStyleProject project = jenkins.createFreeStyleProject();
-        project.getBuildersList().add(new HelloWorldBuilder(name));
+        project.getBuildersList().add(new NTFYNotifierBuilder(name));
         project = jenkins.configRoundtrip(project);
         jenkins.assertEqualDataBoundBeans(
-                new HelloWorldBuilder(name), project.getBuildersList().get(0));
+                new NTFYNotifierBuilder(name), project.getBuildersList().get(0));
     }
 
     @Test
     public void testConfigRoundtripFrench() throws Exception {
         FreeStyleProject project = jenkins.createFreeStyleProject();
-        HelloWorldBuilder builder = new HelloWorldBuilder(name);
+        NTFYNotifierBuilder builder = new NTFYNotifierBuilder(name);
         builder.setUseFrench(true);
         project.getBuildersList().add(builder);
         project = jenkins.configRoundtrip(project);
 
-        HelloWorldBuilder lhs = new HelloWorldBuilder(name);
+        NTFYNotifierBuilder lhs = new NTFYNotifierBuilder(name);
         lhs.setUseFrench(true);
         jenkins.assertEqualDataBoundBeans(lhs, project.getBuildersList().get(0));
     }
@@ -42,7 +42,7 @@ public class HelloWorldBuilderTest {
     @Test
     public void testBuild() throws Exception {
         FreeStyleProject project = jenkins.createFreeStyleProject();
-        HelloWorldBuilder builder = new HelloWorldBuilder(name);
+        NTFYNotifierBuilder builder = new NTFYNotifierBuilder(name);
         project.getBuildersList().add(builder);
 
         FreeStyleBuild build = jenkins.buildAndAssertSuccess(project);
@@ -53,7 +53,7 @@ public class HelloWorldBuilderTest {
     public void testBuildFrench() throws Exception {
 
         FreeStyleProject project = jenkins.createFreeStyleProject();
-        HelloWorldBuilder builder = new HelloWorldBuilder(name);
+        NTFYNotifierBuilder builder = new NTFYNotifierBuilder(name);
         builder.setUseFrench(true);
         project.getBuildersList().add(builder);
 
