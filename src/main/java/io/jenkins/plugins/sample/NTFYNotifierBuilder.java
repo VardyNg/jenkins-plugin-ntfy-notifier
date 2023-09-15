@@ -58,6 +58,7 @@ public class NTFYNotifierBuilder extends Builder implements SimpleBuildStep {
         
         listener.getLogger().println("Sending message to " + topicURL);
         listener.getLogger().println("Message: " + message);
+        listener.getLogger().println("Title: " + title);
         listener.getLogger().println("Priority: " + priority);
 
         try {
