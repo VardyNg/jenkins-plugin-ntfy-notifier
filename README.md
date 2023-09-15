@@ -1,4 +1,4 @@
-# ntfy-sender
+# ntfy-notifier
 
 ## Introduction
 
