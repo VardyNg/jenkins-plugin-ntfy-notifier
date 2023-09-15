@@ -27,13 +27,15 @@ public class NTFYNotifierBuilder extends Builder implements SimpleBuildStep {
     private final String topic;
     private final String title;
     private final String message;
+    private final String priority;
 
     @DataBoundConstructor
-    public NTFYNotifierBuilder(String serverURL, String topic, String message, String title) {
+    public NTFYNotifierBuilder(String serverURL, String topic, String message, String title, String priority) {
         this.serverURL = serverURL;
         this.topic = topic;
         this.message = message;
         this.title = title;
+        this.priority = priority;
     }
 
     public String getServerURL() {
@@ -56,6 +58,7 @@ public class NTFYNotifierBuilder extends Builder implements SimpleBuildStep {
         
         listener.getLogger().println("Sending message to " + topicURL);
         listener.getLogger().println("Message: " + message);
+        listener.getLogger().println("Priority: " + priority);
 
         try {
             HttpURLConnection conn = (HttpURLConnection) new URL(topicURL).openConnection();
@@ -65,6 +68,7 @@ public class NTFYNotifierBuilder extends Builder implements SimpleBuildStep {
 
             // set headers
             if (!title.isEmpty()) conn.setRequestProperty("Title", title);
+            if (!priority.isEmpty()) conn.setRequestProperty("Priority", priority);
             
             // To send a POST request, we should set this to true
             conn.setDoOutput(true);
